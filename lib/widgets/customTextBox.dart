@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 Widget CustomTextBox({
   required context,
   required title,
+  required controller,
 }) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -17,6 +18,7 @@ Widget CustomTextBox({
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: TextFormField(
+            controller: controller,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],

@@ -1,68 +1,94 @@
 import 'package:bmi_calculator/consts/strings.dart';
+import 'package:bmi_calculator/views/home_screen.dart';
 import 'package:bmi_calculator/widgets/customElevatedButton.dart';
 import 'package:bmi_calculator/widgets/customHeightSpacer.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Result extends StatefulWidget {
-  const Result({super.key});
+  const Result({super.key, required this.bmiResult});
+
+  final double bmiResult;
 
   @override
   State<Result> createState() => _ResultState();
 }
 
 class _ResultState extends State<Result> {
-  double bmiResult = 40.0;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                yourResult,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.3,
-                child: _getRadialGauge(context: context, value: bmiResult),
-              ),
-              CustomHeightSpacer(context: context),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => Row(
-                  children: [
-                    Text(
-                      bmiValues[index]['title'].toString(),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    const Spacer(),
-                    Text(
-                      bmiValues[index]['value'].toString(),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyHomePage(
+              title: bmiCalculator,
+            ),
+          ),
+        );
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  yourResult,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                separatorBuilder: (context, index) => const Divider(),
-                itemCount: bmiValues.length,
-              ),
-              CustomHeightSpacer(context: context),
-              Center(
-                child: CustomElevatedButton(
-                  context: context,
-                  height: MediaQuery.sizeOf(context).height * 0.08,
-                  width: MediaQuery.sizeOf(context).width * 0.5,
-                  onTap: () => Navigator.pop(context),
-                  title: 'Re-Calculate',
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  child: _getRadialGauge(
+                    context: context,
+                    value: widget.bmiResult,
+                    title: bmiText(widget.bmiResult)[0],
+                    textColor: bmiText(widget.bmiResult)[1],
+                  ),
                 ),
-              ),
-            ],
+                CustomHeightSpacer(context: context),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => Row(
+                    children: [
+                      Text(
+                        bmiValues[index]['title'].toString(),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const Spacer(),
+                      Text(
+                        bmiValues[index]['value'].toString(),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: bmiValues.length,
+                ),
+                CustomHeightSpacer(context: context),
+                Center(
+                  child: CustomElevatedButton(
+                    context: context,
+                    height: MediaQuery.sizeOf(context).height * 0.08,
+                    width: MediaQuery.sizeOf(context).width * 0.5,
+                    onTap: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyHomePage(
+                          title: bmiCalculator,
+                        ),
+                      ),
+                    ),
+                    title: 'Re-Calculate',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -70,7 +96,12 @@ class _ResultState extends State<Result> {
   }
 }
 
-Widget _getRadialGauge({required context, required value}) {
+Widget _getRadialGauge({
+  required context,
+  required value,
+  required title,
+  required textColor,
+}) {
   return SfRadialGauge(
     enableLoadingAnimation: true,
     animationDuration: 3000,
@@ -147,8 +178,13 @@ Widget _getRadialGauge({required context, required value}) {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Very Severely UnderWeight',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  title,
+                  style: TextStyle(
+                    fontWeight:
+                        Theme.of(context).textTheme.titleMedium!.fontWeight,
+                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                    color: textColor,
+                  ),
                 ),
               ],
             ),
@@ -159,4 +195,24 @@ Widget _getRadialGauge({required context, required value}) {
       ),
     ],
   );
+}
+
+List bmiText(bmiResult) {
+  if (bmiResult <= 14.9) {
+    return [bmiValues[0]['title'], bmiValues[0]['color']];
+  } else if (bmiResult >= 14.0 && bmiResult <= 15.9) {
+    return [bmiValues[1]['title'], bmiValues[1]['color']];
+  } else if (bmiResult >= 16.0 && bmiResult <= 18.4) {
+    return [bmiValues[2]['title'], bmiValues[2]['color']];
+  } else if (bmiResult >= 18.5 && bmiResult <= 24.9) {
+    return [bmiValues[3]['title'], bmiValues[3]['color']];
+  } else if (bmiResult >= 25.0 && bmiResult <= 29.9) {
+    return [bmiValues[4]['title'], bmiValues[4]['color']];
+  } else if (bmiResult >= 30.0 && bmiResult <= 34.9) {
+    return [bmiValues[5]['title'], bmiValues[5]['color']];
+  } else if (bmiResult >= 35.0 && bmiResult <= 35.9) {
+    return [bmiValues[6]['title'], bmiValues[6]['color']];
+  } else {
+    return [bmiValues[7]['title'], bmiValues[7]['color']];
+  }
 }
