@@ -3,10 +3,7 @@
 A new Flutter project.
 
 ## UI
-![Screenshot_20240509_234334](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/3fca4bca-deeb-43cf-9ebb-41b7554eb6e7)
-![Screenshot_20240509_234435](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/c15a2af9-6382-45c4-a8d8-b39c11f0620b)
-![Screenshot_20240509_234419](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/fa0c2ff3-984d-4bac-bdf9-9ea6124d15c3)
-
+![Untitled design](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/90841e93-d099-4f4b-a9c1-c03ec69cdc70)
 
 ## Getting Started
 
