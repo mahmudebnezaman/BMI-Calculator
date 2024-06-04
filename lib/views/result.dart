@@ -1,7 +1,6 @@
-import 'package:bmi_calculator/consts/strings.dart';
-import 'package:bmi_calculator/views/home_screen.dart';
-import 'package:bmi_calculator/widgets/customElevatedButton.dart';
-import 'package:bmi_calculator/widgets/customHeightSpacer.dart';
+import 'package:bmi_calculator_for_adults/consts/strings.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_elevated_button.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_height_spacer.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -17,78 +16,58 @@ class Result extends StatefulWidget {
 class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(
-              title: bmiCalculator,
-            ),
-          ),
-        );
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  yourResult,
-                  style: Theme.of(context).textTheme.bodyLarge,
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                yourResult,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.3,
+                child: _getRadialGauge(
+                  context: context,
+                  value: widget.bmiResult,
+                  title: bmiText(widget.bmiResult)[0],
+                  textColor: bmiText(widget.bmiResult)[1],
                 ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.3,
-                  child: _getRadialGauge(
-                    context: context,
-                    value: widget.bmiResult,
-                    title: bmiText(widget.bmiResult)[0],
-                    textColor: bmiText(widget.bmiResult)[1],
-                  ),
-                ),
-                CustomHeightSpacer(context: context),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) => Row(
-                    children: [
-                      Text(
-                        bmiValues[index]['title'].toString(),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const Spacer(),
-                      Text(
-                        bmiValues[index]['value'].toString(),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemCount: bmiValues.length,
-                ),
-                CustomHeightSpacer(context: context),
-                Center(
-                  child: CustomElevatedButton(
-                    context: context,
-                    height: MediaQuery.sizeOf(context).height * 0.08,
-                    width: MediaQuery.sizeOf(context).width * 0.5,
-                    onTap: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                          title: bmiCalculator,
-                        ),
-                      ),
+              ),
+              customHeightSpacer(context: context),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => Row(
+                  children: [
+                    Text(
+                      bmiValues[index]['title'].toString(),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    title: 'Re-Calculate',
-                  ),
+                    const Spacer(),
+                    Text(
+                      bmiValues[index]['value'].toString(),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: bmiValues.length,
+              ),
+              customHeightSpacer(context: context),
+              Center(
+                child: customElevatedButton(
+                  context: context,
+                  height: MediaQuery.sizeOf(context).height * 0.08,
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  onTap: () => Navigator.pop(context),
+                  title: 'Re-Calculate',
+                ),
+              ),
+            ],
           ),
         ),
       ),

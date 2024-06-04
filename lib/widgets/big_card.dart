@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget BigCardTitle({
+Widget bigCardTitle({
   required context,
   required img,
   required title,

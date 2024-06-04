@@ -1,15 +1,15 @@
-import 'package:bmi_calculator/consts/strings.dart';
-
-// import 'package:bmi_calculator/model/bmiCalculation.dart';
-import 'package:bmi_calculator/views/result.dart';
-import 'package:bmi_calculator/widgets/bigCard.dart';
-import 'package:bmi_calculator/widgets/customCard.dart';
-import 'package:bmi_calculator/widgets/customElevatedButton.dart';
-import 'package:bmi_calculator/widgets/customHeightSpacer.dart';
-import 'package:bmi_calculator/widgets/customTextBox.dart';
-import 'package:bmi_calculator/widgets/genderButton.dart';
-
 import 'package:flutter/material.dart';
+
+import 'package:bmi_calculator_for_adults/consts/strings.dart';
+
+import 'package:bmi_calculator_for_adults/views/result.dart';
+
+import 'package:bmi_calculator_for_adults/widgets/big_card.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_card.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_elevated_button.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_height_spacer.dart';
+import 'package:bmi_calculator_for_adults/widgets/custom_wheel_button.dart';
+import 'package:bmi_calculator_for_adults/widgets/gender_button.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -21,50 +21,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController ageController = TextEditingController();
-  TextEditingController ftController = TextEditingController();
-  TextEditingController inController = TextEditingController();
-  TextEditingController lbController = TextEditingController();
-  TextEditingController cmController = TextEditingController();
-  TextEditingController kgController = TextEditingController();
 
   bool isMetric = true;
   bool isImperial = false;
 
-  void toggleMetricMode() {
-    if (isMetric == false) {
-      isImperial = isMetric;
-      isMetric = !isMetric;
-      setState(() {});
-    }
-  }
-
-  void toggleImperialMode() {
-    if (isImperial == false) {
-      isMetric = isImperial;
-      isImperial = !isImperial;
-      setState(() {});
-    }
-  }
-
   bool isMale = true;
   bool isFemale = false;
 
-  void toggleMaleMode() {
-    if (isMale == false) {
-      isFemale = isMale;
-      isMale = !isMale;
-      setState(() {});
-    }
-  }
+  int currentAgeValue = 0;
+  int maxAge = 200;
+  int initAge = 0;
 
-  void toggleFemaleMode() {
-    if (isFemale == false) {
-      isMale = isFemale;
-      isFemale = !isFemale;
-      setState(() {});
-    }
-  }
+  int currentFtValue = 0;
+  int maxFt = 10;
+  int initFt = 0;
+
+  int currentInValue = 0;
+  int maxIn = 11;
+  int initIn = 0;
+
+  int currentLbValue = 0;
+  int maxLb = 1400;
+  int initLb = 0;
+
+  int currentCmValue = 0;
+  int maxCm = 275;
+  int initCm = 0;
+
+  int currentKgValue = 0;
+  int maxKg = 650;
+  int initKg = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -101,70 +87,70 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                CustomHeightSpacer(
+                customHeightSpacer(
                   context: context,
                 ),
                 Row(
                   children: [
                     CustomCard(
-                        context: context,
-                        width: MediaQuery.sizeOf(context).width * 0.43,
-                        widget: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              gender,
-                              style: Theme.of(context).textTheme.titleMedium,
+                      width: MediaQuery.sizeOf(context).width * 0.43,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            gender,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          SizedBox(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                genderButton(
+                                  context: context,
+                                  buttonName: male,
+                                  isSelected: isMale,
+                                  onTap: toggleMaleMode,
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                  child: VerticalDivider(
+                                    thickness: 3,
+                                  ),
+                                ),
+                                genderButton(
+                                  context: context,
+                                  buttonName: female,
+                                  isSelected: isFemale,
+                                  onTap: toggleFemaleMode,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 60,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  GenderButton(
-                                    context: context,
-                                    buttonName: male,
-                                    isSelected: isMale,
-                                    onTap: toggleMaleMode,
-                                  ),
-                                  const SizedBox(
-                                    height: 40,
-                                    child: VerticalDivider(
-                                      thickness: 3,
-                                    ),
-                                  ),
-                                  GenderButton(
-                                    context: context,
-                                    buttonName: female,
-                                    isSelected: isFemale,
-                                    onTap: toggleFemaleMode,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     const Spacer(),
                     CustomCard(
-                      context: context,
                       width: MediaQuery.sizeOf(context).width * 0.43,
-                      widget: CustomTextBox(
-                        context: context,
+                      child: CustomWheelButton(
                         title: age,
-                        controller: ageController,
+                        currentValue: currentAgeValue,
+                        totalCount: maxAge,
+                        initValue: initAge,
+                        callback: changeAgeValue,
                       ),
                     ),
                   ],
                 ),
-                CustomHeightSpacer(
+                customHeightSpacer(
                   context: context,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomElevatedButton(
+                    customElevatedButton(
                       context: context,
                       height: MediaQuery.sizeOf(context).height * 0.05,
                       width: MediaQuery.sizeOf(context).width * 0.4,
@@ -172,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       title: 'Imperial',
                       isSelected: isImperial,
                     ),
-                    CustomElevatedButton(
+                    customElevatedButton(
                       context: context,
                       height: MediaQuery.sizeOf(context).height * 0.05,
                       width: MediaQuery.sizeOf(context).width * 0.4,
@@ -182,89 +168,93 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                CustomHeightSpacer(
+                customHeightSpacer(
                   context: context,
                 ),
                 CustomCard(
-                  context: context,
                   width: MediaQuery.sizeOf(context).width,
-                  widget: Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      BigCardTitle(
+                      bigCardTitle(
                         context: context,
                         img: imgRuler,
                         title: height,
                       ),
                       isMetric
-                          ? CustomTextBox(
-                              context: context,
+                          ? CustomWheelButton(
                               title: cm,
-                              controller: cmController,
+                              currentValue: currentCmValue,
+                              totalCount: maxCm,
+                              initValue: initCm,
+                              callback: changeCmValue,
                             )
                           : Row(
                               children: [
-                                CustomTextBox(
-                                  context: context,
+                                CustomWheelButton(
                                   title: ft,
-                                  controller: ftController,
+                                  currentValue: currentFtValue,
+                                  totalCount: maxFt,
+                                  initValue: initFt,
+                                  callback: changeFtValue,
                                 ),
-                                CustomTextBox(
-                                  context: context,
+                                const SizedBox(
+                                  height: 80,
+                                  child: VerticalDivider(
+                                      // thickness: 3,
+                                      ),
+                                ),
+                                CustomWheelButton(
                                   title: inch,
-                                  controller: inController,
+                                  currentValue: currentInValue,
+                                  totalCount: maxIn,
+                                  initValue: initIn,
+                                  callback: changeInValue,
                                 ),
                               ],
                             ),
                     ],
                   ),
                 ),
-                CustomHeightSpacer(
+                customHeightSpacer(
                   context: context,
                 ),
                 CustomCard(
-                  context: context,
                   width: MediaQuery.sizeOf(context).width,
-                  widget: Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      BigCardTitle(
+                      bigCardTitle(
                         context: context,
                         img: imgWeightScale,
                         title: weight,
                       ),
                       isMetric
-                          ? CustomTextBox(
-                              context: context,
+                          ? CustomWheelButton(
                               title: kg,
-                              controller: kgController,
+                              currentValue: currentKgValue,
+                              totalCount: maxKg,
+                              initValue: initKg,
+                              callback: changeKgValue,
                             )
-                          : CustomTextBox(
-                              context: context,
+                          : CustomWheelButton(
                               title: lb,
-                              controller: lbController,
+                              currentValue: currentLbValue,
+                              totalCount: maxLb,
+                              initValue: initLb,
+                              callback: changeLbValue,
                             ),
                     ],
                   ),
                 ),
-                CustomHeightSpacer(
+                customHeightSpacer(
                   context: context,
                 ),
-                CustomElevatedButton(
+                customElevatedButton(
                   context: context,
                   height: MediaQuery.sizeOf(context).height * 0.08,
                   width: MediaQuery.sizeOf(context).width * 0.5,
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => Result(
-                    //       bmiResult: bmiCalculation(),
-                    //     ),
-                    //   ),
-                    // ).then((value) {
-                    //   dispose();
-                    // });
                     validation();
                   },
                   title: 'Calculate',
@@ -277,14 +267,37 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void validation() {
-    double? ageValue = double.tryParse(ageController.text) ?? 0;
-    double? cmValue = double.tryParse(cmController.text) ?? 0;
-    double? kgValue = double.tryParse(kgController.text) ?? 0;
-    double? ftValue = double.tryParse(ftController.text) ?? 0;
-    double? inValue = double.tryParse(inController.text) ?? 0;
-    double? lbValue = double.tryParse(lbController.text) ?? 0;
+  void changeAgeValue(val) {
+    currentAgeValue = val;
+    setState(() {});
+  }
 
+  void changeFtValue(val) {
+    currentFtValue = val;
+    setState(() {});
+  }
+
+  void changeInValue(val) {
+    currentInValue = val;
+    setState(() {});
+  }
+
+  void changeLbValue(val) {
+    currentLbValue = val;
+    setState(() {});
+  }
+
+  void changeCmValue(val) {
+    currentCmValue = val;
+    setState(() {});
+  }
+
+  void changeKgValue(val) {
+    currentKgValue = val;
+    setState(() {});
+  }
+
+  void validation() {
     var snackBar = SnackBar(
       content: Text(
         'Values should be greater than 0',
@@ -294,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
       duration: const Duration(seconds: 2),
     );
     if (isMetric) {
-      if (ageValue <= 0 || cmValue <= 0 || kgValue <= 0) {
+      if (currentAgeValue <= 0 || currentCmValue <= 0 || currentKgValue <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           snackBar,
         );
@@ -306,12 +319,13 @@ class _MyHomePageState extends State<MyHomePage> {
               bmiResult: bmiCalculation(),
             ),
           ),
-        ).then((value) {
-          dispose();
-        });
+        );
       }
     } else {
-      if (ageValue <= 0 || ftValue <= 0 || inValue <= 0 || lbValue <= 0) {
+      if (currentAgeValue <= 0 ||
+          currentFtValue <= 0 ||
+          currentInValue <= 0 ||
+          currentLbValue <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           snackBar,
         );
@@ -323,43 +337,60 @@ class _MyHomePageState extends State<MyHomePage> {
               bmiResult: bmiCalculation(),
             ),
           ),
-        ).then((value) {
-          dispose();
-        });
+        );
       }
     }
   }
 
   double bmiCalculation() {
-    // double? ageValue = double.tryParse(ageController.text) ?? 0;
-    double? cmValue = double.tryParse(cmController.text) ?? 0;
-    cmValue = cmValue / 100;
-    double? kgValue = double.tryParse(kgController.text) ?? 0;
-    double? ftValue = double.tryParse(ftController.text) ?? 0;
-    if (ftValue != 0) {
-      ftValue *= 12;
+    if (currentFtValue != 0) {
+      currentFtValue *= 12;
     }
-    double? inValue = double.tryParse(inController.text) ?? 0;
-    double? lbValue = double.tryParse(lbController.text) ?? 0;
 
     double bmiResult;
 
     if (isMetric) {
-      bmiResult = kgValue / (cmValue * cmValue);
+
+      bmiResult = currentKgValue / (currentCmValue/100 * currentCmValue/100);
     } else {
-      bmiResult = 703 * (lbValue / ((ftValue + inValue) * (ftValue + inValue)));
+      bmiResult = 703 *
+          (currentLbValue /
+              ((currentFtValue + currentInValue) *
+                  (currentFtValue + currentInValue)));
     }
     return bmiResult;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    ageController.clear();
-    cmController.clear();
-    kgController.clear();
-    ftController.clear();
-    inController.clear();
-    lbController.clear();
+  void toggleMetricMode() {
+    if (isMetric == false) {
+      isImperial = isMetric;
+      isMetric = !isMetric;
+      setState(() {});
+    }
   }
+
+  void toggleImperialMode() {
+    if (isImperial == false) {
+      isMetric = isImperial;
+      isImperial = !isImperial;
+      setState(() {});
+    }
+  }
+
+  void toggleMaleMode() {
+    if (isMale == false) {
+      isFemale = isMale;
+      isMale = !isMale;
+      setState(() {});
+    }
+  }
+
+  void toggleFemaleMode() {
+    if (isFemale == false) {
+      isMale = isFemale;
+      isFemale = !isFemale;
+      setState(() {});
+    }
+  }
+
 }

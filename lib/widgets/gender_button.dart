@@ -1,7 +1,12 @@
-import 'package:bmi_calculator/consts/strings.dart';
+import 'package:bmi_calculator_for_adults/consts/strings.dart';
 import 'package:flutter/material.dart';
 
-Widget GenderButton({required context, required buttonName, required isSelected, required onTap}) {
+Widget genderButton({
+  required context,
+  required buttonName,
+  required isSelected,
+  required onTap,
+}) {
   return InkWell(
     borderRadius: BorderRadius.circular(
       12,
@@ -18,10 +23,9 @@ Widget GenderButton({required context, required buttonName, required isSelected,
         Text(
           buttonName,
           style: TextStyle(
-            color: isSelected ? Colors.deepPurple : Colors.white,
-            fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
-            fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight
-          ),
+              color: isSelected ? Colors.deepPurple : Colors.white,
+              fontSize: Theme.of(context).textTheme.bodySmall!.fontSize,
+              fontWeight: Theme.of(context).textTheme.bodySmall!.fontWeight,),
         ),
       ],
     ),

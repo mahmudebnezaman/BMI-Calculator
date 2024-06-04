@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget CustomElevatedButton({
+Widget customElevatedButton({
   required context,
   required height,
   required width,

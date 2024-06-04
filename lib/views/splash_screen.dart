@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bmi_calculator/consts/strings.dart';
-import 'package:bmi_calculator/views/home_screen.dart';
+import 'package:bmi_calculator_for_adults/consts/strings.dart';
+import 'package:bmi_calculator_for_adults/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
