@@ -2,8 +2,8 @@
 
 A new Flutter project.
 
-## UI
-![Untitled design](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/90841e93-d099-4f4b-a9c1-c03ec69cdc70)
+## UI![Untitled design (2)](https://github.com/mahmudebnezaman/BMI-Calculator/assets/89069368/ccd9aa62-e5b9-4942-8471-96c777ed4e3a)
+
 
 ## Getting Started
 
