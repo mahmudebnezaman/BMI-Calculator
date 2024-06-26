@@ -21,36 +21,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isMetric = true, isImperial = false;
 
-  bool isMetric = true;
-  bool isImperial = false;
+  bool isMale = true, isFemale = false;
 
-  bool isMale = true;
-  bool isFemale = false;
+  int currentAgeValue = 0, maxAge = 200, initAge = 0;
 
-  int currentAgeValue = 0;
-  int maxAge = 200;
-  int initAge = 0;
+  int currentFtValue = 0, maxFt = 10, initFt = 0;
 
-  int currentFtValue = 0;
-  int maxFt = 10;
-  int initFt = 0;
+  int currentInValue = 0, maxIn = 11, initIn = 0;
 
-  int currentInValue = 0;
-  int maxIn = 11;
-  int initIn = 0;
+  int currentLbValue = 0, maxLb = 1400, initLb = 0;
 
-  int currentLbValue = 0;
-  int maxLb = 1400;
-  int initLb = 0;
+  int currentCmValue = 0, maxCm = 275, initCm = 0;
 
-  int currentCmValue = 0;
-  int maxCm = 275;
-  int initCm = 0;
+  int currentKgValue = 0, maxKg = 650, initKg = 0;
 
-  int currentKgValue = 0;
-  int maxKg = 650;
-  int initKg = 0;
+  @override
+  void initState() {
+    super.initState();
+    resetValues();
+  }
+
+  void resetValues() {
+    setState(() {
+      isMetric = true;
+      isImperial = false;
+      isMale = true;
+      isFemale = false;
+      currentAgeValue = 0;
+      currentFtValue = 0;
+      currentInValue = 0;
+      currentLbValue = 0;
+      currentCmValue = 0;
+      currentKgValue = 0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           widget.title,
@@ -75,10 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Icon(
-                          Icons.scale,
-                          size: 15,
-                        ),
+                        Image.asset('assets/icons/bmi_short.png', height: 30,color: Colors.white,),
                       ],
                     ),
                     Text(
@@ -183,36 +186,36 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       isMetric
                           ? CustomWheelButton(
-                              title: cm,
-                              currentValue: currentCmValue,
-                              totalCount: maxCm,
-                              initValue: initCm,
-                              callback: changeCmValue,
-                            )
+                        title: cm,
+                        currentValue: currentCmValue,
+                        totalCount: maxCm,
+                        initValue: initCm,
+                        callback: changeCmValue,
+                      )
                           : Row(
-                              children: [
-                                CustomWheelButton(
-                                  title: ft,
-                                  currentValue: currentFtValue,
-                                  totalCount: maxFt,
-                                  initValue: initFt,
-                                  callback: changeFtValue,
-                                ),
-                                const SizedBox(
-                                  height: 80,
-                                  child: VerticalDivider(
-                                      // thickness: 3,
-                                      ),
-                                ),
-                                CustomWheelButton(
-                                  title: inch,
-                                  currentValue: currentInValue,
-                                  totalCount: maxIn,
-                                  initValue: initIn,
-                                  callback: changeInValue,
-                                ),
-                              ],
+                        children: [
+                          CustomWheelButton(
+                            title: ft,
+                            currentValue: currentFtValue,
+                            totalCount: maxFt,
+                            initValue: initFt,
+                            callback: changeFtValue,
+                          ),
+                          const SizedBox(
+                            height: 80,
+                            child: VerticalDivider(
+                              // thickness: 3,
                             ),
+                          ),
+                          CustomWheelButton(
+                            title: inch,
+                            currentValue: currentInValue,
+                            totalCount: maxIn,
+                            initValue: initIn,
+                            callback: changeInValue,
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -231,19 +234,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       isMetric
                           ? CustomWheelButton(
-                              title: kg,
-                              currentValue: currentKgValue,
-                              totalCount: maxKg,
-                              initValue: initKg,
-                              callback: changeKgValue,
-                            )
+                        title: kg,
+                        currentValue: currentKgValue,
+                        totalCount: maxKg,
+                        initValue: initKg,
+                        callback: changeKgValue,
+                      )
                           : CustomWheelButton(
-                              title: lb,
-                              currentValue: currentLbValue,
-                              totalCount: maxLb,
-                              initValue: initLb,
-                              callback: changeLbValue,
-                            ),
+                        title: lb,
+                        currentValue: currentLbValue,
+                        totalCount: maxLb,
+                        initValue: initLb,
+                        callback: changeLbValue,
+                      ),
                     ],
                   ),
                 ),
@@ -320,6 +323,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         );
+        resetValues();
       }
     } else {
       if (currentAgeValue <= 0 ||
@@ -343,54 +347,46 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   double bmiCalculation() {
-    if (currentFtValue != 0) {
-      currentFtValue *= 12;
-    }
-
-    double bmiResult;
+    double bmi = 0.0;
 
     if (isMetric) {
+      var heightInMeters = currentCmValue / 100;
 
-      bmiResult = currentKgValue / (currentCmValue/100 * currentCmValue/100);
+      bmi = currentKgValue / (heightInMeters * heightInMeters);
     } else {
-      bmiResult = 703 *
-          (currentLbValue /
-              ((currentFtValue + currentInValue) *
-                  (currentFtValue + currentInValue)));
-    }
-    return bmiResult;
-  }
+      var heightInInches = (currentFtValue * 12) + currentInValue;
 
-  void toggleMetricMode() {
-    if (isMetric == false) {
-      isImperial = isMetric;
-      isMetric = !isMetric;
-      setState(() {});
+      bmi = (currentLbValue / (heightInInches * heightInInches)) * 703;
     }
+
+    return bmi;
   }
 
   void toggleImperialMode() {
-    if (isImperial == false) {
-      isMetric = isImperial;
-      isImperial = !isImperial;
-      setState(() {});
-    }
+    setState(() {
+      isImperial = true;
+      isMetric = false;
+    });
+  }
+
+  void toggleMetricMode() {
+    setState(() {
+      isImperial = false;
+      isMetric = true;
+    });
   }
 
   void toggleMaleMode() {
-    if (isMale == false) {
-      isFemale = isMale;
-      isMale = !isMale;
-      setState(() {});
-    }
+    setState(() {
+      isMale = true;
+      isFemale = false;
+    });
   }
 
   void toggleFemaleMode() {
-    if (isFemale == false) {
-      isMale = isFemale;
-      isFemale = !isFemale;
-      setState(() {});
-    }
+    setState(() {
+      isMale = false;
+      isFemale = true;
+    });
   }
-
 }

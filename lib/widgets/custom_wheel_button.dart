@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:wheel_slider/wheel_slider.dart';
 
-class CustomWheelButton extends StatefulWidget {
+class CustomWheelButton extends StatelessWidget {
   const CustomWheelButton({
     super.key,
     required this.title,
@@ -19,17 +19,12 @@ class CustomWheelButton extends StatefulWidget {
   final ValueSetter<int> callback;
 
   @override
-  State<CustomWheelButton> createState() => _CustomWheelButtonState();
-}
-
-class _CustomWheelButtonState extends State<CustomWheelButton> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          widget.title,
+          title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const Gap(5),
@@ -43,15 +38,15 @@ class _CustomWheelButtonState extends State<CustomWheelButton> {
                   pointerColor: Colors.deepPurple,
                   lineColor: Theme.of(context).colorScheme.onSurface,
                   itemSize: 10,
-                  totalCount: widget.totalCount.toInt(),
-                  initValue: widget.initValue,
+                  totalCount: totalCount.toInt(),
+                  initValue: initValue,
                   onValueChanged: (val) {
-                    widget.callback(val);
+                    callback(val);
                   },
                   // hapticFeedbackType: HapticFeedbackType.vibrate,
                 ),
                 const Gap(5),
-                Text('${widget.currentValue}'),
+                Text('$currentValue'),
               ],
             ),
           ),

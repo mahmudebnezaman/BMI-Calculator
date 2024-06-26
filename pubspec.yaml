@@ -39,6 +39,7 @@ dependencies:
   syncfusion_flutter_gauges: ^25.1.42
   wheel_slider: ^1.2.1
   gap: ^3.0.1
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:
