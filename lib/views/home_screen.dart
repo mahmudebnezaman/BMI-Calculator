@@ -1,9 +1,7 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-
 import 'package:bmi_calculator_for_adults/consts/strings.dart';
-
 import 'package:bmi_calculator_for_adults/views/result.dart';
-
 import 'package:bmi_calculator_for_adults/widgets/big_card.dart';
 import 'package:bmi_calculator_for_adults/widgets/custom_card.dart';
 import 'package:bmi_calculator_for_adults/widgets/custom_elevated_button.dart';
@@ -13,7 +11,6 @@ import 'package:bmi_calculator_for_adults/widgets/gender_button.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -22,19 +19,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isMetric = true, isImperial = false;
-
   bool isMale = true, isFemale = false;
-
   int currentAgeValue = 0, maxAge = 200, initAge = 0;
-
   int currentFtValue = 0, maxFt = 10, initFt = 0;
-
   int currentInValue = 0, maxIn = 11, initIn = 0;
-
   int currentLbValue = 0, maxLb = 1400, initLb = 0;
-
   int currentCmValue = 0, maxCm = 275, initCm = 0;
-
   int currentKgValue = 0, maxKg = 650, initKg = 0;
 
   @override
@@ -78,10 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           widget.title,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                        const SizedBox(
-                          width: 5,
+                        const SizedBox(width: 5),
+                        Image.asset(
+                          'assets/icons/bmi_short.png',
+                          height: 30,
+                          color: Colors.white,
                         ),
-                        Image.asset('assets/icons/bmi_short.png', height: 30,color: Colors.white,),
                       ],
                     ),
                     Text(
@@ -90,9 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                customHeightSpacer(
-                  context: context,
-                ),
+                customHeightSpacer(context: context),
                 Row(
                   children: [
                     CustomCard(
@@ -118,9 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 const SizedBox(
                                   height: 40,
-                                  child: VerticalDivider(
-                                    thickness: 3,
-                                  ),
+                                  child: VerticalDivider(thickness: 3),
                                 ),
                                 genderButton(
                                   context: context,
@@ -147,9 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                customHeightSpacer(
-                  context: context,
-                ),
+                customHeightSpacer(context: context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -171,19 +157,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-                customHeightSpacer(
-                  context: context,
-                ),
+                customHeightSpacer(context: context),
                 CustomCard(
                   width: MediaQuery.sizeOf(context).width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      bigCardTitle(
-                        context: context,
-                        img: imgRuler,
-                        title: height,
-                      ),
+                      bigCardTitle(context: context, img: imgRuler, title: height),
                       isMetric
                           ? CustomWheelButton(
                         title: cm,
@@ -203,9 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           const SizedBox(
                             height: 80,
-                            child: VerticalDivider(
-                              // thickness: 3,
-                            ),
+                            child: VerticalDivider(),
                           ),
                           CustomWheelButton(
                             title: inch,
@@ -219,19 +197,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                customHeightSpacer(
-                  context: context,
-                ),
+                customHeightSpacer(context: context),
                 CustomCard(
                   width: MediaQuery.sizeOf(context).width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      bigCardTitle(
-                        context: context,
-                        img: imgWeightScale,
-                        title: weight,
-                      ),
+                      bigCardTitle(context: context, img: imgWeightScale, title: weight),
                       isMetric
                           ? CustomWheelButton(
                         title: kg,
@@ -250,16 +222,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                customHeightSpacer(
-                  context: context,
-                ),
+                customHeightSpacer(context: context),
                 customElevatedButton(
                   context: context,
                   height: MediaQuery.sizeOf(context).height * 0.08,
                   width: MediaQuery.sizeOf(context).width * 0.5,
-                  onTap: () {
-                    validation();
-                  },
+                  onTap:validation,
                   title: 'Calculate',
                 ),
               ],
@@ -271,36 +239,49 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changeAgeValue(val) {
-    currentAgeValue = val;
-    setState(() {});
+    setState(() {
+      currentAgeValue = val;
+      log(currentAgeValue.toString());
+    });
   }
 
   void changeFtValue(val) {
-    currentFtValue = val;
-    setState(() {});
+    setState(() {
+      currentFtValue = val;
+      log(currentFtValue.toString());
+    });
   }
 
   void changeInValue(val) {
-    currentInValue = val;
-    setState(() {});
+    setState(() {
+      currentInValue = val;
+      log(currentInValue.toString());
+    });
   }
 
   void changeLbValue(val) {
-    currentLbValue = val;
-    setState(() {});
+    setState(() {
+      currentLbValue = val;
+      log(currentLbValue.toString());
+    });
   }
 
   void changeCmValue(val) {
-    currentCmValue = val;
-    setState(() {});
+    setState(() {
+      currentCmValue = val;
+      log(currentCmValue.toString());
+    });
   }
 
   void changeKgValue(val) {
-    currentKgValue = val;
-    setState(() {});
+    setState(() {
+      currentKgValue = val;
+      log(currentKgValue.toString());
+    });
   }
 
   void validation() {
+    var bmi = 0.0;
     var snackBar = SnackBar(
       content: Text(
         'Values should be greater than 0',
@@ -311,54 +292,50 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     if (isMetric) {
       if (currentAgeValue <= 0 || currentCmValue <= 0 || currentKgValue <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackBar,
-        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
+        bmi = bmiCalculation();
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Result(
-              bmiResult: bmiCalculation(),
+              bmiResult: bmi.toDouble(),
             ),
           ),
         );
         resetValues();
       }
     } else {
-      if (currentAgeValue <= 0 ||
-          currentFtValue <= 0 ||
-          currentInValue <= 0 ||
-          currentLbValue <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackBar,
-        );
+      if (currentAgeValue <= 0 || currentFtValue <= 0 || currentLbValue <= 0) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
+        bmi = bmiCalculation();
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Result(
-              bmiResult: bmiCalculation(),
+              bmiResult: bmi.toDouble(),
             ),
           ),
         );
+        resetValues();
       }
     }
   }
 
   double bmiCalculation() {
     double bmi = 0.0;
-
     if (isMetric) {
       var heightInMeters = currentCmValue / 100;
-
       bmi = currentKgValue / (heightInMeters * heightInMeters);
+      log("Current Kg Value: ${currentKgValue.toString()}");
+      log("Height in Meters: ${heightInMeters.toString()}");
+      log("BMI: ${bmi.toString()}");
     } else {
       var heightInInches = (currentFtValue * 12) + currentInValue;
-
       bmi = (currentLbValue / (heightInInches * heightInInches)) * 703;
+      log("BMI: ${bmi.toString()}");
     }
-
     return bmi;
   }
 
