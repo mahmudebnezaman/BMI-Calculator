@@ -36,7 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_animate: ^4.5.0
-  syncfusion_flutter_gauges: ^25.1.42
+  syncfusion_flutter_gauges: ^28.1.39
   wheel_slider: ^1.2.1
   gap: ^3.0.1
   device_preview: ^1.2.0
@@ -44,8 +44,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
-  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_lints: ^5.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"

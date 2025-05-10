@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'BMI Calculator',
       theme: ThemeData(
         brightness: Brightness.dark,
         textTheme: const TextTheme(
